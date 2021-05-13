@@ -1,45 +1,46 @@
-const router = require('express').Router();
-const Task = require('./task.model');
-const usersService = require('./task.service');
+const router = require('express').Router({mergeParams: true});
+const taskService = require('./task.service');
+const boardMem= require('../board/board.memory.repository');
 
 // get all tasks
 
-router.route('/:boardId/tasks').get(async (req, res) => {
-  const users = await usersService.getAll();
-  // map user fields to exclude secret fields like "password"
-  res.json(users.map(Task.toResponse));
+router.route('/').get(async (req, res) => {
+  const { boardId } = req.params;
+  const tasks = await taskService.getAllByBoardId(boardId);
+  res.json(tasks);
 });
 
 // get task by id
 
-router.route('/:boardId/tasks/:taskId').get(async (req, res) => {
-  const users = await usersService.getAll();
-  // map user fields to exclude secret fields like "password"
-  res.json(users.map(Task.toResponse));
+router.route('/:taskId').get(async (req, res) => {
+  const { taskId, boardId } = req.params;
+  const find = taskService.getById(boardId, taskId);
+  res.json(find);
 });
 
 // create task
 
-router.route('/:boardId/tasks').post(async (req, res) => {
-  const users = await usersService.getAll();
-  // map user fields to exclude secret fields like "password"
-  res.json(users.map(Task.toResponse));
+router.route('/').post(async (req, res) => {
+  const { boardId } = req.params;
+  taskService.createTaskById(req.body, boardId);
+  res.json(boardMem.boards);
 });
 
 // update task
 
-router.route('/:boardId/tasks/:taskId').get(async (req, res) => {
-  const users = await usersService.getAll();
-  // map user fields to exclude secret fields like "password"
-  res.json(users.map(Task.toResponse));
-});
+// router.route('/:taskId').get(async (req, res) => {
+//   const { boardId, taskId } = req.params;
+//   const users = await taskService.getAll();
+//   const tasks = await taskService.getAllByBoardId(boardId);
+//   res.json(tasks);
+// });
 
 // delete task
 
-router.route('/:boardId/tasks/:taskId').get(async (req, res) => {
-  const users = await usersService.getAll();
-  // map user fields to exclude secret fields like "password"
-  res.json(users.map(Task.toResponse));
-});
+// router.route('/:taskId').get(async (req, res) => {
+//   const users = await taskService.getAll();
+//   const tasks = await taskService.getAllByBoardId(boardId);
+//   res.json(tasks);
+// });
 
 module.exports = router;
