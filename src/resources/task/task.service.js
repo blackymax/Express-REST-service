@@ -1,44 +1,49 @@
 const uuid = require('uuid');
-const boardRepo = require('../board/board.memory.repository');
+const taskRepo = require('./task.memory.repository');
 
 const getAllByBoardId = (id) => {
-    const find = boardRepo.boards.find(el => el.id === id);
-    return find.columns.map(el => el.tasks)
+  const findTasks = taskRepo.tasks.filter((el) => el.boardId === id);
+  return findTasks;
 };
 const getById = (boardId, taskId) => {
-    const findBoard = boardRepo.boards.find(el => el.id === boardId);
-    let find = {};
-    findBoard.columns.forEach(element => {
-        find = element.tasks.find(el => el.taskId === taskId);
-    })
-    return find
+  const find = taskRepo.tasks.find((el) => el.id === taskId);
+  return find;
 };
 const createTaskById = (obj, boardId) => {
-    const findBoard = boardRepo.boards.find(el => el.id === boardId);
-    if (!findBoard.columns[0].tasks || findBoard.columns[0].tasks.length === 0) {
-        findBoard.columns[0].tasks = [{...obj, boardId, taskId: uuid.v1()}];
-    } else {
-        findBoard.columns[0].tasks.push({...obj, boardId, taskId: uuid.v1()})
-    }
+  const newTask = { ...obj, boardId, id: uuid.v1() };
+  taskRepo.tasks.push(newTask);
+  return taskRepo.tasks[taskRepo.tasks.length - 1];
 };
 const updateTaskById = (obj, boardId, taskId) => {
-    const findTask = getById(boardId, taskId);
-    Object.assign(findTask, obj);
-    return boardRepo.boards;
-}
+  const findTask = getById(boardId, taskId);
+  Object.assign(findTask, obj);
+  return findTask;
+};
 const deleteTaskById = (boardId, taskId) => {
-    const findBoard = boardRepo.boards.find(el => el.id === boardId);
-    let findTaskIndex;
-    let findBoardIndex;
-    findBoard.columns.forEach((element, index) => {
-        findTaskIndex = element.tasks.findIndex(el => el.taskId === taskId);
-        if (findTaskIndex) {
-            findBoardIndex = index;
+  const findTaskIndex = taskRepo.tasks.findIndex((el) => el.id === taskId);
+  taskRepo.tasks.splice(findTaskIndex, 1);
+  return taskRepo.tasks;
+};
+
+const deleteTasks = (id) => {
+  taskRepo.tasks = taskRepo.tasks.filter((el) => el.boardId !== id);
+  return taskRepo.tasks;
+};
+const removeUsersId = (id) => {
+    taskRepo.tasks.forEach((el) => {
+        if (el.userId === id) {
+            const newObj = {...el, userId: null};
+            Object.assign(el, newObj);
         }
-    })
-    findBoard.columns[findBoardIndex].tasks.splice(findTaskIndex, 1);
-    return boardRepo.boards;
-}
+    });
+};
 
-
-module.exports = { getById, getAllByBoardId, createTaskById, updateTaskById, deleteTaskById };
+module.exports = {
+  getById,
+  getAllByBoardId,
+  createTaskById,
+  updateTaskById,
+  deleteTaskById,
+  deleteTasks,
+  removeUsersId,
+};

@@ -15,31 +15,30 @@ router.route('/').get(async (req, res) => {
 router.route('/:userId').get(async (req, res) => {
   const {userId} = req.params;
   const user = usersService.getById(userId);
-  res.json(user);
+  res.status(200).json(User.toResponse(user));
 });
 
 // create user
 
 router.route('/').post(async (req, res) => {
-  usersService.addNew({...req.body, id: uuid.v1()});
-  res.json(usersService.users);
+  const user = await usersService.addNew({...req.body, id: uuid.v1()});
+  res.status(201).json(User.toResponse(user));
 });
 
 // update user
 
 router.route('/:userId').put(async (req, res) => {
   const {userId} = req.params;
-  const user = usersService.getById(userId);
-  Object.assign(user, req.body);
-  res.json(usersService.users);
+  const user = usersService.updateUser(userId, req.body);
+  res.status(200).json(User.toResponse(user));
 });
 
 // delete user
 
 router.route('/:userId').delete(async (req, res) => {
-  const {userId} = req.body;
+  const {userId} = req.params;
   usersService.deleteByIndex(userId);
-  res.json(usersService.users);
+  res.status(200).json(usersService.users);
 });
 
 module.exports = router;
