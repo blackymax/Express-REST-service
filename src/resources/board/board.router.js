@@ -14,14 +14,14 @@ router.route('/').get(async (req, res) => {
 router.route('/:boardId').get(async (req, res) => {
   const { boardId } = req.params; 
   const find = boardService.getById(boardId);
-  res.json(find);
+  res.status(200).json(find);
 });
 
 // create board
 
 router.route('/').post(async (req, res) => {
   boardService.createBoard({...req.body, id: uuid.v1()})
-  res.json(boardService.boards);
+  res.status(201).json(boardService.boards);
 });
 
 // update board

@@ -3,13 +3,13 @@ const boardRepo = require('../board/board.memory.repository');
 
 const getAllByBoardId = (id) => {
     const find = boardRepo.boards.find(el => el.id === id);
-    return find.columns.tasks
+    return find.columns.map(el => el.tasks)
 };
 const getById = (boardId, taskId) => {
     const findBoard = boardRepo.boards.find(el => el.id === boardId);
-    let find;
+    let find = {};
     findBoard.columns.forEach(element => {
-        find = element.tasks.find(el => el.id === taskId);
+        find = element.tasks.find(el => el.taskId === taskId);
     })
     return find
 };
@@ -22,14 +22,22 @@ const createTaskById = (obj, boardId) => {
     }
 };
 const updateTaskById = (obj, boardId, taskId) => {
-    const findBoard = boardRepo.boards.find(el => el.id === boardId);
-    const findTask = findBoard.columns.find(el => el.id === taskId);
+    const findTask = getById(boardId, taskId);
     Object.assign(findTask, obj);
+    return boardRepo.boards;
 }
 const deleteTaskById = (boardId, taskId) => {
     const findBoard = boardRepo.boards.find(el => el.id === boardId);
-    const findTaskIndex = findBoard.columns.findIndex(el => el.id === taskId);
-    findBoard.columns.splice(findTaskIndex, 1);
+    let findTaskIndex;
+    let findBoardIndex;
+    findBoard.columns.forEach((element, index) => {
+        findTaskIndex = element.tasks.findIndex(el => el.taskId === taskId);
+        if (findTaskIndex) {
+            findBoardIndex = index;
+        }
+    })
+    findBoard.columns[findBoardIndex].tasks.splice(findTaskIndex, 1);
+    return boardRepo.boards;
 }
 
 

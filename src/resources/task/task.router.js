@@ -28,19 +28,18 @@ router.route('/').post(async (req, res) => {
 
 // update task
 
-// router.route('/:taskId').get(async (req, res) => {
-//   const { boardId, taskId } = req.params;
-//   const users = await taskService.getAll();
-//   const tasks = await taskService.getAllByBoardId(boardId);
-//   res.json(tasks);
-// });
+router.route('/:taskId').put(async (req, res) => {
+  const { taskId, boardId } = req.params;
+  const result = taskService.updateTaskById(req.body, boardId, taskId);
+  res.json(result);
+});
 
 // delete task
 
-// router.route('/:taskId').get(async (req, res) => {
-//   const users = await taskService.getAll();
-//   const tasks = await taskService.getAllByBoardId(boardId);
-//   res.json(tasks);
-// });
+router.route('/:taskId').delete(async (req, res) => {
+  const { taskId, boardId } = req.params;
+  const result = taskService.deleteTaskById(boardId, taskId);
+  res.json(result);
+});
 
 module.exports = router;
