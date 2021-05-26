@@ -1,16 +1,19 @@
+/**
+ * @module BOARD_MEMORY
+*/
 const taskRepo = require('../task/task.service');
 const Board = require('./board.model');
 
 const boards = [];
 /**
  * Returns all boards
- * @returns {Array<Board>} returns array of boards
+ * @returns {Array<Board>} boards
  */
 const getAll = async () => boards.map(Board.toResponse);
 /**
- * Returns board by
- * @param {object} obj with params
- * @returns {Board} object by model
+ * Returns new board
+ * @param {object} obj object with params
+ * @returns {Board} new Board
  */
 const createBoard = async (obj) => {
   const newObj = new Board(obj);
@@ -18,8 +21,8 @@ const createBoard = async (obj) => {
   return Board.toResponse(boards[boards.length - 1]);
 };
 /**
- * Return board by id
- * @param {string} id first term
+ * Returns board by id
+ * @param {string} id board id
  * @returns {Board} Board
  */
 const getById = async (id) => {
@@ -28,9 +31,9 @@ const getById = async (id) => {
 };
 /**
  * Returns board with new params
- * @param {string} id
- * @param {object} obj with params
- * @returns {Board} new board with new params
+ * @param {string} id board id
+ * @param {object} obj object with params
+ * @returns {Board} new board
  */
 const updateBoard = async (id, obj) => {
   const find = boards.find((el) => el.id === id);
@@ -38,8 +41,8 @@ const updateBoard = async (id, obj) => {
 };
 /**
  * Returns new array of boards
- * @param {string} id
- * @returns {Array<board>} array of boards without deleted Board
+ * @param {string} id task id
+ * @returns {Array<Board>} Boards without deleted Board
  */
 const deleteBoard = async (id) => {
   taskRepo.deleteTasks(id);

@@ -1,6 +1,13 @@
 const uuid = require('uuid');
 
+/** Class Board */
 class Board {
+  /**
+ * @typedef {Object} Board
+ * @property {string} id
+ * @property {string} title
+ * @property {Array<Object>} columns
+ */
   constructor({
     id = uuid.v1(),
     title = 'USER',

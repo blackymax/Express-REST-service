@@ -1,6 +1,14 @@
 const uuid = require('uuid');
 
+/** Class User */
 class User {
+  /**
+ * @typedef {Object} User
+ * @property {string} id
+ * @property {string} name
+ * @property {string} login
+ * @property {string} password
+ */
   constructor({
     id = uuid.v1(),
     name = 'USER',

@@ -1,3 +1,6 @@
+/**
+ * @module USER_MEMORY
+*/
 const taskRepo = require('../task/task.service');
 const User = require('./user.model');
 
@@ -5,32 +8,28 @@ const users = [];
 
 /**
  * Returns all tasks from db
- * @typedef {Array<User>}
- * @returns {Array<User>} returns users
+ * @returns {Array<User>} users
  */
 const getAll = async () => users.map(User.toResponse);
 /**
- * Searching for User and returns him
- * @typedef {User}
- * @param {string} id of user 
- * @returns {User} returns the desired one User
+ * Searches for User and returns him
+ * @param {string} id user id
+ * @returns {User} user
  */
 const getById = async (id) => User.toResponse(users.find(el => el.id === id))
 /**
- * Create User and return him
- * @typedef {User}
- * @param {object} obj with attributes of new User 
- * @returns {User} returns created User
+ * Creates User and returns him
+ * @param {object} obj object with params 
+ * @returns {User} new user
  */
 const addNew = async (obj) => {
     users.push(new User({...obj}))
     return User.toResponse(users[users.length - 1]);
 };
 /**
- * Delete user by ID
- * @typedef {Array<User>}
- * @param {string} id of user
- * @returns {Array<User>} returns new users array without deleted
+ * Deletes user by id and returns it
+ * @param {string} id user id
+ * @returns {Array<User>} users without deleted
  */
 const deleteByIndex = async (id) => {
     const find = users.findIndex(el => el.id === id)
@@ -39,11 +38,10 @@ const deleteByIndex = async (id) => {
     return users.map(User.toResponse);
 }
 /**
- * Search user and update him
- * @typedef {User}
- * @param {string} id of user
- * @param {object} obj of new attributes for User 
- * @returns {User} returns new version of User
+ * Searches for user and updates him
+ * @param {string} id user id
+ * @param {object} obj with params 
+ * @returns {User} new user
  */
 const updateUser = async (id, obj) => {
     const find = users.findIndex(el => el.id === id);

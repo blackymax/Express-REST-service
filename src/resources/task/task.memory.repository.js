@@ -1,30 +1,33 @@
+/**
+ * @module TASK_MEMORY
+*/
 const Task = require('./task.model');
 
 let tasks = [];
 
 /**
  * Returns all tasks by boardId
- * @param {string} id of board 
- * @returns {Array<Task>} returns array of tasks for desired board
+ * @param {string} id board id
+ * @returns {Array<Task>} tasks of board
  */
 const getAllByBoardId = async (id) => {
   const findTasks = tasks.filter((el) => el.boardId === id);
   return findTasks.map(Task.toResponse);
 };
 /**
- * Search Task by id and retunrs him 
- * @param {string} taskId unique id of task which need to find
- * @returns {Task} returns the desired one Task
+ * Searches for Task by id and returns it 
+ * @param {string} taskId task id
+ * @returns {Task} Task
  */
 const getById = async (taskId) => {
   const find = tasks.find((el) => el.id === taskId);
   return find;
 };
 /**
- * Create task by Id
- * @param {object} object for creating new Task
- * @param {string} boardId 
- * @returns {Task} returns new Task
+ * Creates task by Id
+ * @param {object} obj object with params
+ * @param {string} boardId board id
+ * @returns {Task} new Task
  */
 const createTaskById = async (obj, boardId) => {
   const newTask = { ...obj, boardId };
@@ -32,10 +35,10 @@ const createTaskById = async (obj, boardId) => {
   return Task.toResponse(tasks[tasks.length - 1]);
 };
 /**
- * Update task by id
- * @param {object} obj source for update Task
- * @param {string} taskId from route params to find task
- * @returns {Task} returns new Task
+ * Updates task by id
+ * @param {object} obj object with params
+ * @param {string} taskId task id
+ * @returns {Task} new Task
  */
 const updateTaskById = async (obj, taskId) => {
   const findTask = tasks.find((el)=>el.id === taskId);
@@ -43,9 +46,9 @@ const updateTaskById = async (obj, taskId) => {
   return Task.toResponse(findTask);
 };
 /**
- * Delete Task by id
- * @param {string} taskId from route params 
- * @returns {Array<Task>} returns array of tasks without deleted 
+ * Deletes Task by id
+ * @param {string} taskId task id
+ * @returns {Array<Task>} tasks without deleted 
  */
 const deleteTaskById = async ( taskId ) => {
   const findTaskIndex = tasks.findIndex((el) => el.id === taskId);
@@ -53,9 +56,9 @@ const deleteTaskById = async ( taskId ) => {
   return tasks.map(Task.toResponse);
 };
 /**
- * Delete tasks by id from db
- * @param {string} task id 
- * @returns {Array<Task>} returns array of tasks
+ * Deletes tasks by id from db
+ * @param {string} id task id
+ * @returns {Array<Task>} tasks without deleted
  */
 const deleteTasks = async (id) => {
   tasks = tasks.filter((el) => el.boardId !== id);
@@ -63,7 +66,7 @@ const deleteTasks = async (id) => {
 };
 /**
  * Remove user's id from task
- * @param {string} id of user for search
+ * @param {string} id user's id
  */
 const removeUsersId = async (id) => {
     tasks.forEach((el) => {

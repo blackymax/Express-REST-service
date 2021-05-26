@@ -2,11 +2,6 @@
     "plugins": ["plugins/markdown"],
     "recurseDepth": 10,
     "source": {
-        "include": [ 
-            "./src/resources/users/user.memory.repository.js",
-            "./src/resources/board/board.memory.repository.js",
-            "./src/resources/task/task.memory.repository.js"
-        ],
         "includePattern": ".+\\.js(doc|x)?$"
     },
     "sourceType": "module",
@@ -17,5 +12,8 @@
     "templates": {
         "cleverLinks": false,
         "monospaceLinks": false
+    },
+    "opts": {
+        "template": "node_modules/clean-jsdoc-theme"
     }
 }
