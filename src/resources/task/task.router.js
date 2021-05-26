@@ -1,22 +1,21 @@
 const router = require('express').Router({mergeParams: true});
 const taskService = require('./task.service');
-const Task = require('./task.model');
 
 // get all tasks
 
 router.route('/').get(async (req, res) => {
   const { boardId } = req.params;
-  const tasks = taskService.getAllByBoardId(boardId);
-  res.status(200).json(tasks.map(Task.toResponse));
+  const tasks = await taskService.getAllByBoardId(boardId);
+  res.status(200).json(tasks);
 });
 
 // get task by id
 
 router.route('/:taskId').get(async (req, res) => {
-  const { taskId, boardId } = req.params;
-  const find = taskService.getById(boardId, taskId);
+  const { taskId } = req.params;
+  const find = await taskService.getById(taskId);
   if (find) {
-    res.status(200).json(Task.toResponse(find));
+    res.status(200).json(find);
   } else {
     res.status(404).json({message: 'cannot find task'})
   }
@@ -26,24 +25,24 @@ router.route('/:taskId').get(async (req, res) => {
 
 router.route('/').post(async (req, res) => {
   const { boardId } = req.params;
-  const newTask = taskService.createTaskById(req.body, boardId);
-  res.status(201).json(Task.toResponse(newTask));
+  const newTask = await taskService.createTaskById(req.body, boardId);
+  res.status(201).json(newTask);
 });
 
 // update task
 
 router.route('/:taskId').put(async (req, res) => {
-  const { taskId, boardId } = req.params;
-  const result = taskService.updateTaskById(req.body, boardId, taskId);
-  res.status(200).json(Task.toResponse(result));
+  const { taskId } = req.params;
+  const result = await taskService.updateTaskById(req.body, taskId);
+  res.status(200).json(result);
 });
 
 // delete task
 
 router.route('/:taskId').delete(async (req, res) => {
-  const { taskId, boardId } = req.params;
-  const result = taskService.deleteTaskById(boardId, taskId);
-  res.status(200).json(result.map(Task.toResponse));
+  const { taskId } = req.params;
+  const result = await taskService.deleteTaskById(taskId);
+  res.status(200).json(result);
 });
 
 module.exports = router;

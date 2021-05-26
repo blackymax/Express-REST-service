@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const uuid = require('uuid');
 const Board = require('./board.model');
 const boardService = require('./board.service');
 
@@ -7,14 +6,14 @@ const boardService = require('./board.service');
 
 router.route('/').get(async (req, res) => {
   const boards = await boardService.getAll();
-  res.json(boards.map(Board.toResponse));
+  res.json(boards);
 });
 
 // get board by Id
 
 router.route('/:boardId').get(async (req, res) => {
   const { boardId } = req.params; 
-  const find = boardService.getById(boardId);
+  const find = await boardService.getById(boardId);
   if (find) {
     res.status(200).json(Board.toResponse(find));
   } else {
@@ -25,24 +24,24 @@ router.route('/:boardId').get(async (req, res) => {
 // create board
 
 router.route('/').post(async (req, res) => {
-  const newBoard = boardService.createBoard({...req.body, id: uuid.v1()})
-  res.status(201).json(Board.toResponse(newBoard));
+  const newBoard = await boardService.createBoard({...req.body})
+  res.status(201).json(newBoard);
 });
 
 // update board
 
 router.route('/:boardId').put(async (req, res) => {
   const { boardId } = req.params;
-  const newBoard = boardService.updateBoard(boardId, req.body);
-  res.status(200).json(Board.toResponse(newBoard));
+  const newBoard = await boardService.updateBoard(boardId, req.body);
+  res.status(200).json(newBoard);
 });
 
 // delete board
 
 router.route('/:boardId').delete(async (req, res) => {
   const { boardId } = req.params;
-  const result = boardService.deleteBoard(boardId);
-  res.status(200).json(result.map(Board.toResponse));
+  const result = await boardService.deleteBoard(boardId);
+  res.status(200).json(result);
 });
 
 
