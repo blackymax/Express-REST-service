@@ -1,10 +1,11 @@
+import { IUser } from '../../interfaces/interfaces'
 /**
  * @module USER_MEMORY
 */
 const taskRepo = require('../task/task.service');
 const User = require('./user.model');
 
-const users = [];
+const users: IUser[] = [];
 
 /**
  * Returns all tasks from db
@@ -16,14 +17,14 @@ const getAll = async () => users.map(User.toResponse);
  * @param {string} id user id
  * @returns {User} user
  */
-const getById = async (id) => User.toResponse(users.find(el => el.id === id))
+const getById = async (id:string) => User.toResponse(users.find(el => el.id === id))
 /**
  * Creates User and returns him
  * @param {object} obj object with params 
  * @returns {User} new user
  */
-const addNew = async (obj) => {
-    users.push(new User({...obj}))
+const addNew = async (obj:IUser) => {
+    users.push(new User({...obj})as IUser)
     return User.toResponse(users[users.length - 1]);
 };
 /**
@@ -31,7 +32,7 @@ const addNew = async (obj) => {
  * @param {string} id user id
  * @returns {Array<User>} users without deleted
  */
-const deleteByIndex = async (id) => {
+const deleteByIndex = async (id:string) => {
     const find = users.findIndex(el => el.id === id)
     users.splice(find, 1);
     taskRepo.removeUsersId(id);
@@ -43,7 +44,7 @@ const deleteByIndex = async (id) => {
  * @param {object} obj with params 
  * @returns {User} new user
  */
-const updateUser = async (id, obj) => {
+const updateUser = async (id:string, obj:IUser) => {
     const find = users.findIndex(el => el.id === id);
     Object.assign(users[find], obj);
     return User.toResponse(users[find])

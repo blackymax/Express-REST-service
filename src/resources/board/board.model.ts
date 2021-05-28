@@ -1,7 +1,11 @@
+import { IBoard, IColumn } from '../../interfaces/interfaces'
 const uuid = require('uuid');
 
 /** Class Board */
-class Board {
+class Board implements IBoard{
+  id: string;
+  title: string;
+  columns: IColumn[];
   /**
  * @typedef {Object} Board
  * @property {string} id
@@ -18,7 +22,7 @@ class Board {
     this.columns = columns;
   }
 
-  static toResponse(board) {
+  static toResponse(board: IBoard) {
     const { id, title, columns } = board;
     return { id, title, columns };
   }

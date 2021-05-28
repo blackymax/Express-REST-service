@@ -1,3 +1,4 @@
+import { IUser } from '../../interfaces/interfaces'
 /**
  * @module USER_SERVICE
 */
@@ -12,25 +13,25 @@ const getAll = () => usersRepo.getAll();
  * @param {string} id user id
  * @returns {User} user
  */
-const getById = (id) => usersRepo.getById(id);
+const getById = (id: string) => usersRepo.getById(id);
 /**
  * Creates new user and returns him
  * @param {object} obj object with params
  * @returns {User} new user
  */
-const addNew = (obj) => usersRepo.addNew(obj);
+const addNew = (obj: IUser) => usersRepo.addNew(obj);
 /**
  * Deletes user by id
  * @param {string} id user id
  * @returns {Array<User>} users without deleted
  */
-const deleteByIndex = (id) => usersRepo.deleteByIndex(id);
+const deleteByIndex = (id:string) => usersRepo.deleteByIndex(id);
 /**
  * Returns updated user
  * @param {string} id user id
  * @param {object} obj object with params
  * @returns {User} new user
  */
-const updateUser = (id, obj) => usersRepo.updateUser(id, obj)
+const updateUser = (id:string, obj:IUser) => usersRepo.updateUser(id, obj)
 
 module.exports = { getAll, getById, addNew, deleteByIndex, updateUser };

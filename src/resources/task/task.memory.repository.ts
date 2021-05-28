@@ -1,16 +1,18 @@
+import { ITask } from "../../interfaces/interfaces";
+
 /**
  * @module TASK_MEMORY
 */
 const Task = require('./task.model');
 
-let tasks = [];
+let tasks: ITask[] = [];
 
 /**
  * Returns all tasks by boardId
  * @param {string} id board id
  * @returns {Array<Task>} tasks of board
  */
-const getAllByBoardId = async (id) => {
+const getAllByBoardId = async (id:string) => {
   const findTasks = tasks.filter((el) => el.boardId === id);
   return findTasks.map(Task.toResponse);
 };
@@ -19,7 +21,7 @@ const getAllByBoardId = async (id) => {
  * @param {string} taskId task id
  * @returns {Task} Task
  */
-const getById = async (taskId) => {
+const getById = async (taskId:string) => {
   const find = tasks.find((el) => el.id === taskId);
   return find;
 };
@@ -29,7 +31,7 @@ const getById = async (taskId) => {
  * @param {string} boardId board id
  * @returns {Task} new Task
  */
-const createTaskById = async (obj, boardId) => {
+const createTaskById = async (obj:ITask, boardId:string) => {
   const newTask = { ...obj, boardId };
   tasks.push(new Task(newTask));
   return Task.toResponse(tasks[tasks.length - 1]);
@@ -40,7 +42,7 @@ const createTaskById = async (obj, boardId) => {
  * @param {string} taskId task id
  * @returns {Task} new Task
  */
-const updateTaskById = async (obj, taskId) => {
+const updateTaskById = async (obj:ITask, taskId:String) => {
   const findTask = tasks.find((el)=>el.id === taskId);
   Object.assign(findTask, obj);
   return Task.toResponse(findTask);
@@ -50,7 +52,7 @@ const updateTaskById = async (obj, taskId) => {
  * @param {string} taskId task id
  * @returns {Array<Task>} tasks without deleted 
  */
-const deleteTaskById = async ( taskId ) => {
+const deleteTaskById = async ( taskId:string ) => {
   const findTaskIndex = tasks.findIndex((el) => el.id === taskId);
   tasks.splice(findTaskIndex, 1);
   return tasks.map(Task.toResponse);
@@ -60,7 +62,7 @@ const deleteTaskById = async ( taskId ) => {
  * @param {string} id task id
  * @returns {Array<Task>} tasks without deleted
  */
-const deleteTasks = async (id) => {
+const deleteTasks = async (id:string) => {
   tasks = tasks.filter((el) => el.boardId !== id);
   return tasks.map(Task.toResponse);
 };
@@ -68,7 +70,7 @@ const deleteTasks = async (id) => {
  * Remove user's id from task
  * @param {string} id user's id
  */
-const removeUsersId = async (id) => {
+const removeUsersId = async (id:string) => {
     tasks.forEach((el) => {
         if (el.userId === id) {
             const newObj = {...el, userId: null};
