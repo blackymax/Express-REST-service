@@ -1,25 +1,18 @@
-import { IUser } from '../../interfaces/interfaces'
+import { IUser } from '../../interfaces/interfaces';
 
-const uuid = require('uuid');
+import { v4 as uuid } from 'uuid';
 
-/** Class User */
-class User {
-  id:string;
-  name:string;
-  login:string;
-  password:string;
-  /**
- * @typedef {Object} User
- * @property {string} id
- * @property {string} name
- * @property {string} login
- * @property {string} password
- */
+export default class User {
+  id: string;
+  name: string;
+  login: string;
+  password: string;
+
   constructor({
-    id = uuid.v1(),
+    id = uuid(),
     name = 'USER',
     login = 'user',
-    password = 'P@55w0rd'
+    password = 'P@55w0rd',
   } = {}) {
     this.id = id;
     this.name = name;
@@ -27,10 +20,8 @@ class User {
     this.password = password;
   }
 
-  static toResponse(user: IUser) {
+  static toResponse(user: IUser): IUser {
     const { id, name, login } = user;
-    return { id, name, login };
+    return { id, name, login } as IUser;
   }
 }
-
-module.exports = User;

@@ -1,47 +1,43 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
+import express from 'express';
+import User from './user.model';
+import * as usersService from './user.service';
+export const router = express.Router();
 
-export {}
-const router = require('express').Router();
-const uuid = require('uuid');
-const User = require('./user.model');
-const usersService = require('./user.service');
+router.route('/').get(
+  async (_req: Request, res: Response): Promise<void> => {
+    const users = await usersService.getAll();
+    res.status(200).json(users.map(User.toResponse));
+  }
+);
 
-// get all users
+router.route('/:userId').get(
+  async (req: Request, res: Response): Promise<void> => {
+    const { userId } = req.params;
+    const user = await usersService.getById(userId as string);
+    res.status(200).json(User.toResponse(user));
+  }
+);
 
-router.route('/').get(async (_req: Request, res:Response):Promise<void> => {
-  const users = await usersService.getAll();
-  res.status(200).json(users.map(User.toResponse));
-});
+router.route('/').post(
+  async (req: Request, res: Response): Promise<void> => {
+    const user = await usersService.addNew({ ...req.body });
+    res.status(201).json(User.toResponse(user));
+  }
+);
 
-// get the user by id
+router.route('/:userId').put(
+  async (req: Request, res: Response): Promise<void> => {
+    const { userId } = req.params;
+    const user = await usersService.updateUser(userId as string, req.body);
+    res.status(200).json(User.toResponse(user));
+  }
+);
 
-router.route('/:userId').get(async (req:Request, res:Response):Promise<void> => {
-  const {userId} = req.params;
-  const user = await usersService.getById(userId);
-  res.status(200).json(User.toResponse(user));
-});
-
-// create user
-
-router.route('/').post(async (req:Request, res:Response):Promise<void> => {
-  const user = await usersService.addNew({...req.body, id: uuid.v1()});
-  res.status(201).json(User.toResponse(user));
-});
-
-// update user
-
-router.route('/:userId').put(async (req:Request, res:Response):Promise<void> => {
-  const {userId} = req.params;
-  const user = await usersService.updateUser(userId, req.body);
-  res.status(200).json(User.toResponse(user));
-});
-
-// delete user
-
-router.route('/:userId').delete(async (req:Request, res:Response):Promise<void> => {
-  const {userId} = req.params;
-  const users = await usersService.deleteByIndex(userId);
-  res.status(200).json(users);
-});
-
-module.exports = router;
+router.route('/:userId').delete(
+  async (req: Request, res: Response): Promise<void> => {
+    const { userId } = req.params;
+    const users = await usersService.deleteByIndex(userId as string);
+    res.status(200).json(users);
+  }
+);

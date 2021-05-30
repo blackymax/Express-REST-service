@@ -1,82 +1,52 @@
-import { ITask } from "../../interfaces/interfaces";
-
-/**
- * @module TASK_MEMORY
-*/
-const Task = require('./task.model');
+import { ITask } from '../../interfaces/interfaces';
+import Task from './task.model';
 
 let tasks: ITask[] = [];
 
-/**
- * Returns all tasks by boardId
- * @param {string} id board id
- * @returns {Array<Task>} tasks of board
- */
-const getAllByBoardId = async (id:string) => {
+export const getAllByBoardId = async (id: string): Promise<ITask[]> => {
   const findTasks = tasks.filter((el) => el.boardId === id);
   return findTasks.map(Task.toResponse);
 };
-/**
- * Searches for Task by id and returns it 
- * @param {string} taskId task id
- * @returns {Task} Task
- */
-const getById = async (taskId:string) => {
+
+export const getById = async (taskId: string): Promise<ITask> => {
   const find = tasks.find((el) => el.id === taskId);
-  return find;
+  return find as ITask;
 };
-/**
- * Creates task by Id
- * @param {object} obj object with params
- * @param {string} boardId board id
- * @returns {Task} new Task
- */
-const createTaskById = async (obj:ITask, boardId:string) => {
-  const newTask = { ...obj, boardId };
-  tasks.push(new Task(newTask));
-  return Task.toResponse(tasks[tasks.length - 1]);
+
+export const createTaskById = async (
+  obj: ITask,
+  boardId: string
+): Promise<ITask> => {
+  const newTask: ITask = new Task({ ...obj, boardId });
+  tasks.push(newTask);
+  return getById(newTask.id);
 };
-/**
- * Updates task by id
- * @param {object} obj object with params
- * @param {string} taskId task id
- * @returns {Task} new Task
- */
-const updateTaskById = async (obj:ITask, taskId:String) => {
-  const findTask = tasks.find((el)=>el.id === taskId);
+
+export const updateTaskById = async (
+  obj: ITask,
+  taskId: string
+): Promise<ITask> => {
+  const findTask = tasks.find((el) => el.id === taskId);
   Object.assign(findTask, obj);
-  return Task.toResponse(findTask);
+  return Task.toResponse(findTask as ITask);
 };
-/**
- * Deletes Task by id
- * @param {string} taskId task id
- * @returns {Array<Task>} tasks without deleted 
- */
-const deleteTaskById = async ( taskId:string ) => {
+
+export const deleteTaskById = async (taskId: string): Promise<ITask[]> => {
   const findTaskIndex = tasks.findIndex((el) => el.id === taskId);
   tasks.splice(findTaskIndex, 1);
   return tasks.map(Task.toResponse);
 };
-/**
- * Deletes tasks by id from db
- * @param {string} id task id
- * @returns {Array<Task>} tasks without deleted
- */
-const deleteTasks = async (id:string) => {
+
+export const deleteTasks = async (id: string): Promise<ITask[]> => {
   tasks = tasks.filter((el) => el.boardId !== id);
   return tasks.map(Task.toResponse);
 };
-/**
- * Remove user's id from task
- * @param {string} id user's id
- */
-const removeUsersId = async (id:string) => {
-    tasks.forEach((el) => {
-        if (el.userId === id) {
-            const newObj = {...el, userId: null};
-            Object.assign(el, newObj);
-        }
-    });
-};
 
-module.exports = { getAllByBoardId, getById, createTaskById, updateTaskById, deleteTaskById, deleteTasks, removeUsersId };
+export const removeUsersId = async (id: string): Promise<void> => {
+  tasks.forEach((el) => {
+    if (el.userId === id) {
+      const newObj = { ...el, userId: null };
+      Object.assign(el, newObj);
+    }
+  });
+};
