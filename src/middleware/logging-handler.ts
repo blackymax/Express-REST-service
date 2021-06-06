@@ -15,7 +15,7 @@ export const logging = (req: Request, res: Response, next: NextFunction): void =
         const time = Date.now() - start;
         const { statusCode } = res;
         const requestData: string | null = JSON.stringify(req.body);
-        const logInfo = `Date: ${currentTime.toUTCString()}; Method: [${method}]; Query params: [${req.query}] request body: [${requestData}]; URL: ${url}; status code: ${statusCode}; time for response: [${time} ms]${newLineChar}`
+        const logInfo = `Date: ${currentTime.toUTCString()}; Method: [${method}]; Query params: [${JSON.stringify(req.query)}] request body: [${requestData}]; URL: ${url}; status code: ${statusCode}; time for response: [${time} ms]${newLineChar}`
         fs.appendFileSync(__dirname + '/../../logs/log_info.txt', logInfo);
         process.stdout.write(logInfo)
     })
