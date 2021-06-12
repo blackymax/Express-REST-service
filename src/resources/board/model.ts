@@ -1,4 +1,4 @@
-import { IBoard, IColumn } from '../../interfaces/interfaces';
+import { IBoard, IColumn } from '../../interfaces';
 import { v4 as uuid } from 'uuid';
 import Column from './column.model';
 

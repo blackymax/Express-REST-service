@@ -1,4 +1,4 @@
-import { IUser } from '../../interfaces/interfaces';
+import { IUser } from '../../interfaces';
 
 import { v4 as uuid } from 'uuid';
 

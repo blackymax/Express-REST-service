@@ -1,4 +1,4 @@
-import { ITask } from '../../interfaces/interfaces';
+import { ITask } from '../../interfaces';
 
 import { v4 as uuid } from 'uuid';
 

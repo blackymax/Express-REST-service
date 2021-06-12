@@ -3,7 +3,7 @@ import * as swaggerUI from 'swagger-ui-express';
 import * as path from 'path';
 import YAML from 'yamljs';
 import * as userRouter from './resources/users/user.router';
-import * as boardRouter from './resources/board/board.router';
+import * as boardRouter from './resources/board/router';
 import * as taskRouter from './resources/task/task.router';
 import { logging } from './middleware/logging-handler';
 import { handleErrors } from './middleware/error-handler';

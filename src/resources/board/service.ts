@@ -1,7 +1,7 @@
-import { IBoard } from '../../interfaces/interfaces';
-import * as boardRepo from './board.memory.repository';
+import { IBoard } from '../../interfaces';
+import * as boardRepo from './memory.repository';
 
-export const getAll = (): Promise<IBoard[]> => boardRepo.getAll();
+export const getAll = (): Promise<IBoard[]|undefined> => boardRepo.getAll();
 
 export const createBoard = (obj: IBoard): Promise<IBoard> =>
   boardRepo.createBoard(obj);
