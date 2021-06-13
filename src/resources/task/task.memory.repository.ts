@@ -1,6 +1,6 @@
 import { ITask } from '../../interfaces/index';
 import Task from './task.model';
-import { db } from '../db';
+import { db } from '../../common/db';
 
 export const getAllByBoardId = async (id: string): Promise<ITask[]> => {
   const findTasks = db.tasks.filter((el) => el.boardId === id);

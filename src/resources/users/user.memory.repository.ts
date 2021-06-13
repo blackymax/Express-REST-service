@@ -1,7 +1,7 @@
 import { IUser } from '../../interfaces';
 import * as taskRepo from '../task/task.service';
 import User from './user.model';
-import { db } from '../db';
+import { db } from '../../common/db';
 
 export const getAll = async (): Promise<IUser[]> => db.users.map(User.toResponse);
 

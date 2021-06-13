@@ -1,7 +1,7 @@
 import { IBoard } from '../../interfaces';
 import * as taskRepo from '../task/task.service';
 import Board from './model';
-import { db } from '../db';
+import { db } from '../../common/db';
 
 export const getAll = async (): Promise<IBoard[]> =>
   db.boards.map(Board.toResponse);
