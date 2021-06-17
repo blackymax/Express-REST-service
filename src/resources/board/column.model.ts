@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import { IColumn } from '../../interfaces/interfaces';
+import { IColumn } from '../../interfaces';
 
 export default class Column implements IColumn {
   id: string;

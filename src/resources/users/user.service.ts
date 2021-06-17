@@ -1,4 +1,4 @@
-import { IUser } from '../../interfaces/interfaces';
+import { IUser } from '../../interfaces';
 import * as usersRepo from './user.memory.repository';
 
 export const getAll = (): Promise<IUser[]> => usersRepo.getAll();

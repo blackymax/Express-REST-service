@@ -1,7 +1,7 @@
 /**
  * @module TASK_SERVICE
  */
-import { ITask } from '../../interfaces/interfaces';
+import { ITask } from '../../interfaces';
 import * as taskRepo from './task.memory.repository';
 
 export const getAllByBoardId = (id: string): Promise<ITask[]> =>
@@ -15,7 +15,7 @@ export const createTaskById = (
   boardId: string
 ): Promise<ITask | undefined> => taskRepo.createTaskById(obj, boardId);
 
-export const updateTaskById = (obj: ITask, taskId: string): Promise<ITask> =>
+export const updateTaskById = (obj: ITask, taskId: string): Promise<ITask|undefined> =>
   taskRepo.updateTaskById(obj, taskId);
 
 export const deleteTaskById = (taskId: string): Promise<ITask[]> =>
