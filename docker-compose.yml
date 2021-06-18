@@ -11,12 +11,14 @@ services:
             - PORT=${PORT}
         restart: always
         volumes:
-            - ./logs:/app/logs
+            - logs:/app/logs
             - ./src:/app/src
         networks:
             - my-network
     postgres:
-        build: ./src/common
+        build: 
+            context: ./src/common
+            dockerfile: Dockerfile.db
         ports:
             - ${POSTGRES_PORT}:${POSTGRES_PORT}
         container_name: docker-postgres
@@ -35,3 +37,4 @@ networks:
         driver: bridge
 volumes:
     pgdata:
+    logs:
