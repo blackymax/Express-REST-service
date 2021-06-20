@@ -27,11 +27,20 @@ After starting the app on port (4000 as default) you can open
 in your browser OpenAPI documentation by typing http://localhost:4000/doc/.
 For more information about OpenAPI/Swagger please visit https://swagger.io/.
 
-## START WITH DOCKER
-
+## Start with Docker or VS-Code
+Check that postgres-db is clear!!!
+#Change POSTGRES_HOST at .env file:
+### - to host.docker.internal if you want to check with vs-code
+### - to localhost if you want to check with Docker app
 ```
 docker compose up
 ```
+## Generate migration
+Check that db is clear!
+```
+npm run db:generate new
+```
+![image](https://user-images.githubusercontent.com/70108983/122685353-77bcb700-d213-11eb-80fd-3a7a62faf59f.png)
 
 ## Testing
 
