@@ -30,8 +30,8 @@ For more information about OpenAPI/Swagger please visit https://swagger.io/.
 ## Start with Docker or VS-Code
 Check that postgres-db is clear!!!
 #Change POSTGRES_HOST at .env file:
-### - to # host.docker.internal if you want to check with vs-code
-### - to # localhost if you want to check with Docker app
+### - to `host.docker.internal` if you want to check with vs-code
+### - to `localhost` if you want to check with Docker app
 ```
 docker compose up
 ```
