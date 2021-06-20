@@ -13,11 +13,11 @@ import { errorLogger } from './middleware/error-logging';
 export const app = express();
 const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
 app.use(express.json());
-app.use(cors())
+app.use(cors());
 handleErrors();
-app.use(logging)
+app.use(logging);
 app.use('/doc', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 app.use('/users', userRouter.router);
 app.use('/boards', boardRouter.router);
 app.use('/boards/:boardId/tasks', taskRouter.router);
-app.use(errorLogger)
+app.use(errorLogger);

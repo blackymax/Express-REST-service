@@ -1,12 +1,5 @@
-import { IBoard, IUser, ITask } from '../interfaces/index';
 import { getConnection, createConnection } from 'typeorm';
 import { config } from './ormconfig';
-
-interface DataBase {
-    boards: IBoard[]
-    users: IUser[],
-    tasks: ITask[] 
-}
 
 const connectToDB = async () => {
     let connection;
@@ -27,7 +20,7 @@ const connectToDB = async () => {
     }
 }
 
-export const TryDBConnect = async (cb: ()=>void) => {
+export const TryDBConnect = async (cb: ()=>void):Promise<void> => {
     try {
         await connectToDB();
         cb();
@@ -35,9 +28,3 @@ export const TryDBConnect = async (cb: ()=>void) => {
         console.log('DB Connection Error! ', err)
     }
 }
-
-export const db: DataBase = {
-    boards: [],
-    users: [],
-    tasks: [] 
-};

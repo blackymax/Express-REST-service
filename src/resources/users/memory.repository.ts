@@ -17,7 +17,8 @@ export const getById = async (id: string): Promise<User|undefined> => {
 export const addNew = async (obj: User): Promise<User> => {
   const userRepo = getRepository(User);
   const result = await userRepo.create(obj);
-  return result;
+  const savedResult = await userRepo.save(result);
+  return savedResult;
 };
 
 export const deleteByIndex = async (id: string): Promise<User[]> => {

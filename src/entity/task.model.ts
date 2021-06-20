@@ -10,8 +10,8 @@ export class Task {
   order: number;
   @Column()
   description: string;
-  @Column({nullable: true})
-  userId: string;
+  @Column({type: 'varchar', nullable: true})
+  userId!: string|null;
   @Column()
   boardId: string;
   @Column({nullable: true})

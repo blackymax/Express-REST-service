@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import express from 'express';
 import * as taskService from './service';
 import { ITask } from '../../interfaces';
+import { Task } from '../../entity/task.model';
 export const router = express.Router({ mergeParams: true });
 
 router.route('/').get(
@@ -38,7 +39,7 @@ router.route('/:taskId').put(
   async (req: Request, res: Response): Promise<void> => {
     const { taskId } = req.params;
     const result = await taskService.updateTaskById(
-      req.body as ITask,
+      req.body as Task,
       taskId as string
     );
     res.status(200).json(result as ITask);

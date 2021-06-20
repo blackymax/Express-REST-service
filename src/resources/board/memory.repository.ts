@@ -1,9 +1,10 @@
 import { getRepository } from 'typeorm';
 import { Board } from '../../entity/board.model';
+import { Task } from '../../entity/task.model';
 
 export const getAll = async (): Promise<Board[]> => {
   const boardRepo = getRepository(Board)
-  return await boardRepo.find({where: {}});
+  return await boardRepo.find();
 }
 export const createBoard = async (obj: Board): Promise<Board> => {
   const boardRepo = getRepository(Board)
@@ -19,16 +20,17 @@ export const getById = async (
 };
 export const updateBoard = async (
   id: string,
-  obj: Board
+  obj: Partial<Board>
 ): Promise<Board | undefined> => {
-  const boardRepo = getRepository(Board)
-  const find = await boardRepo.findOne(id);
-  if (!find) throw new Error('NOT_FOUND'); 
-  const newBoard = await boardRepo.update(find, obj);
+  const {columns, ...otherData} = obj;
+  const boardRepo = getRepository(Board);
+  const newBoard = await boardRepo.update(id, otherData);
   return newBoard.raw;
 };
-export const deleteBoard = async (id: string): Promise<Board[]> => {
+export const deleteBoard = async (id: string): Promise<boolean> => {
   const boardRepo = getRepository(Board)
-  await boardRepo.delete({id})
-  return await boardRepo.find({where:{}});
+  const taskRepo = getRepository(Task)
+  await taskRepo.delete({boardId: id});
+  const res = await boardRepo.delete(id)
+  return !!res.affected
 };

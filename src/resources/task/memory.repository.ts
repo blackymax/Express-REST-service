@@ -1,4 +1,3 @@
-import { ITask } from '../../interfaces/index';
 import { Task } from '../../entity/task.model';
 import { getRepository } from 'typeorm';
 
@@ -15,7 +14,7 @@ export const getById = async (taskId: string): Promise<Task|undefined> => {
 };
 
 export const createTaskById = async (
-  obj: ITask,
+  obj: Task,
   boardId: string
 ): Promise<Task> => {
   console.log('inside')
@@ -52,5 +51,5 @@ export const deleteTasks = async (id: string): Promise<Task[]> => {
 export const removeUsersId = async (id: string): Promise<void> => {
   console.log('inside')
   const taskRepo = getRepository(Task);
-  await taskRepo.delete({userId: id});
+  await taskRepo.update({userId: id}, {userId: null});
 };
