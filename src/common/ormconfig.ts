@@ -8,7 +8,7 @@ dotenv.config({
 
 export const config = {
   type: "postgres",
-  name: "typeorm-base",
+  name: "default",
   host: process.env['HOST'],
   port: 5432,
   username: process.env['POSTGRES_USER'],
@@ -16,7 +16,7 @@ export const config = {
   database: process.env['POSTGRES_DB'],
   synchronize: true,
   logging: false,
-  entities: ["src/entity/**/*.ts"],
-  migrations: ["src/migration/**/*.ts"],
-  subscribers: ["src/subscriber/**/*.ts"]
+  entities: [__dirname+"/../../src/entity/**/*.ts"],
+  migrations: ["../../src/migration/**/*.ts"],
+  subscribers: ["../../src/subscriber/**/*.ts"]
 } as ConnectionOptions

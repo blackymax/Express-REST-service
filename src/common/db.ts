@@ -13,11 +13,11 @@ const connectToDB = async () => {
     try{
         connection = await getConnection()
     } catch(err) {
-
+        console.log('Error: '+err)
     }
     try{
         if (connection) {
-            if (connection.isConnected) await connection.connect()
+            if (!connection.isConnected) await connection.connect()
         } else {
             createConnection(config)
         }
@@ -29,7 +29,7 @@ const connectToDB = async () => {
 
 export const TryDBConnect = async (cb: ()=>void) => {
     try {
-        connectToDB();
+        await connectToDB();
         cb();
     } catch (err) {
         console.log('DB Connection Error! ', err)

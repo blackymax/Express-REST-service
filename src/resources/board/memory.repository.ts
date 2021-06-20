@@ -1,31 +1,34 @@
-import { IBoard } from '../../interfaces';
-import * as taskRepo from '../task/task.service';
-import Board from './model';
-import { db } from '../../common/db';
+import { getRepository } from 'typeorm';
+import { Board } from '../../entity/board.model';
 
-export const getAll = async (): Promise<IBoard[]> =>
-  db.boards.map(Board.toResponse);
-export const createBoard = async (obj: IBoard): Promise<IBoard> => {
-  db.boards.push(obj);
-  return Board.toResponse(db.boards[db.boards.length - 1] as IBoard);
+export const getAll = async (): Promise<Board[]> => {
+  const boardRepo = getRepository(Board)
+  return await boardRepo.find({where: {}});
+}
+export const createBoard = async (obj: Board): Promise<Board> => {
+  const boardRepo = getRepository(Board)
+  const newBoard =  await boardRepo.create(obj);
+  const savedBoard = await boardRepo.save(newBoard);
+  return savedBoard;
 };
 export const getById = async (
   id: string | undefined
-): Promise<IBoard | undefined> => {
-  const find = db.boards.find((el) => el.id === id);
-  return find as IBoard;
+): Promise<Board | undefined> => {
+  const boardRepo = getRepository(Board)
+  return await boardRepo.findOne(id);
 };
 export const updateBoard = async (
   id: string,
-  obj: IBoard
-): Promise<IBoard | undefined> => {
-  const find = db.boards.findIndex((el) => el.id === id);
-  db.boards[find] = obj;
-  return db.boards[find];
+  obj: Board
+): Promise<Board | undefined> => {
+  const boardRepo = getRepository(Board)
+  const find = await boardRepo.findOne(id);
+  if (!find) throw new Error('NOT_FOUND'); 
+  const newBoard = await boardRepo.update(find, obj);
+  return newBoard.raw;
 };
-export const deleteBoard = async (id: string): Promise<IBoard[]> => {
-  taskRepo.deleteTasks(id);
-  const find = db.boards.findIndex((el) => el.id === id);
-  db.boards.splice(find, 1);
-  return db.boards;
+export const deleteBoard = async (id: string): Promise<Board[]> => {
+  const boardRepo = getRepository(Board)
+  await boardRepo.delete({id})
+  return await boardRepo.find({where:{}});
 };
