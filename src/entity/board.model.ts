@@ -6,7 +6,7 @@ export class Board{
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ length: 255, nullable: true})
+  @Column({ length: 200, nullable: true})
   title: string;
 
   @OneToMany(

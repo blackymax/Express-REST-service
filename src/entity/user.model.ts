@@ -1,5 +1,5 @@
-import { Entity, PrimaryGeneratedColumn,Column } from 'typeorm';
-import {v4 as uuid} from 'uuid';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { v4 as uuid } from 'uuid';
 
 export interface IUser {
   id: string;
@@ -8,30 +8,27 @@ export interface IUser {
   password: string;
 }
 
-type IUserForReponse = Omit<IUser, 'password'>
+type IUserForReponse = Omit<IUser, 'password'>;
 
-/**
- * Class representing an user
- */
 @Entity()
 export class User implements IUser {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ length: 100 })
+  @Column({ length: 100, nullable: true })
   name: string;
 
-  @Column({ length: 100 })
+  @Column({ length: 100, nullable: true })
   login: string;
 
-  @Column({ length: 100 })
+  @Column({ length: 100, nullable: true })
   password: string;
 
   constructor({
     id = uuid(),
-    name = 'USER',
-    login = 'user',
-    password = 'P@55w0rd',
+    name = 'user',
+    login = 'login',
+    password = 'password',
   }: Partial<IUser> = {}) {
     this.id = id;
     this.name = name;
@@ -44,5 +41,3 @@ export class User implements IUser {
     return { id, name, login };
   }
 }
-
-

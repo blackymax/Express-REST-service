@@ -4,11 +4,11 @@ import { Entity, PrimaryGeneratedColumn,Column } from 'typeorm';
 export class Task {
   @PrimaryGeneratedColumn('uuid')
   id: string;
-  @Column()
+  @Column({length: 200})
   title: string;
   @Column()
   order: number;
-  @Column()
+  @Column({length: 200})
   description: string;
   @Column({type: 'varchar', nullable: true})
   userId!: string|null;

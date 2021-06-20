@@ -6,7 +6,7 @@ export class Columns {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ length: 255 })
+  @Column({ length: 200 })
   title: string;
 
   @Column('integer')
