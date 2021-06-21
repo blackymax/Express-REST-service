@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import express from 'express';
-import User from './user.model';
-import * as usersService from './user.service';
+import * as usersService from './service';
+import { User, IUser } from '../../entity/user.model'
 export const router = express.Router();
 
 router.route('/').get(
@@ -15,7 +15,7 @@ router.route('/:userId').get(
   async (req: Request, res: Response): Promise<void> => {
     const { userId } = req.params;
     const user = await usersService.getById(userId as string);
-    res.status(200).json(User.toResponse(user));
+    res.status(200).json(User.toResponse(user as IUser));
   }
 );
 
@@ -30,7 +30,7 @@ router.route('/:userId').put(
   async (req: Request, res: Response): Promise<void> => {
     const { userId } = req.params;
     const user = await usersService.updateUser(userId as string, req.body);
-    res.status(200).json(User.toResponse(user));
+    res.status(200).json(User.toResponse(user as IUser));
   }
 );
 
@@ -38,6 +38,6 @@ router.route('/:userId').delete(
   async (req: Request, res: Response): Promise<void> => {
     const { userId } = req.params;
     const users = await usersService.deleteByIndex(userId as string);
-    res.status(200).json(users);
+    res.status(200).json(users.map(User.toResponse));
   }
 );

@@ -1,18 +1,18 @@
-import { IBoard } from '../../interfaces';
+import { Board } from '../../entity/board.model';
 import * as boardRepo from './memory.repository';
 
-export const getAll = (): Promise<IBoard[]|undefined> => boardRepo.getAll();
+export const getAll = (): Promise<Board[]|undefined> => boardRepo.getAll();
 
-export const createBoard = (obj: IBoard): Promise<IBoard> =>
+export const createBoard = (obj: Board): Promise<Board> =>
   boardRepo.createBoard(obj);
 
-export const getById = (id: string | undefined): Promise<IBoard | undefined> =>
+export const getById = (id: string | undefined): Promise<Board | undefined> =>
   boardRepo.getById(id);
 
 export const updateBoard = (
   id: string,
-  obj: IBoard
-): Promise<IBoard | undefined> => boardRepo.updateBoard(id, obj);
+  obj: Board
+): Promise<Board | undefined> => boardRepo.updateBoard(id, obj);
 
-export const deleteBoard = (id: string): Promise<IBoard[]> =>
+export const deleteBoard = (id: string): Promise<boolean> =>
   boardRepo.deleteBoard(id);
