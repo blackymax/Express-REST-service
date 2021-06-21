@@ -5,7 +5,6 @@ import { User } from '../entity/user.model';
 import { Board } from '../entity/board.model';
 import { Columns } from '../entity/column.model';
 import { Task } from '../entity/task.model';
-import { InitMigration } from '../migration/1624207758248-new';
 
 
 dotenv.config({
@@ -22,7 +21,7 @@ const config = {
   synchronize: true,
   logging: false,
   entities: [User, Board, Columns, Task],
-  migrations: [InitMigration],
+  migrations: ['src/migration/*.ts'],
   cli:{
     entitiesDir: 'src/entity',
     migrationsDir: 'src/migration/'
