@@ -8,12 +8,11 @@ export const getAll = async (): Promise<Board[]> => {
 };
 export const createBoard = async (obj: Board): Promise<Board> => {
   const boardRepo = getRepository(Board);
-  const newBoard = await boardRepo.create(obj);
-  const savedBoard = await boardRepo.save(newBoard);
-  return savedBoard;
+  const newBoard = boardRepo.create(obj);
+  return boardRepo.save(newBoard);
 };
 export const getById = async (
-  id: string | undefined
+  id?: string
 ): Promise<Board | undefined> => {
   const boardRepo = getRepository(Board);
   return boardRepo.findOne(id);
@@ -30,7 +29,7 @@ export const updateBoard = async (
 export const deleteBoard = async (id: string): Promise<void> => {
   const boardRepo = getRepository(Board);
   const taskRepo = getRepository(Task);
-  Promise.all([
+  await Promise.all([
     await taskRepo.delete({ boardId: id }),
     await boardRepo.delete(id),
   ]);

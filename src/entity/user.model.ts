@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert } from 'typeorm';
 import { v4 as uuid } from 'uuid';
+import bcrypt from 'bcrypt';
 
 export interface IUser {
   id: string;
@@ -23,6 +24,11 @@ export class User implements IUser {
 
   @Column({ length: 100, nullable: true })
   password: string;
+
+  @BeforeInsert()
+  async hashPass():Promise<void>{
+    this.password = await bcrypt.hash(this.password, 10)
+  }
 
   constructor({
     id = uuid(),
