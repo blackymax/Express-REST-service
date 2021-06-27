@@ -30,7 +30,7 @@ export const deleteBoard = async (id: string): Promise<void> => {
   const boardRepo = getRepository(Board);
   const taskRepo = getRepository(Task);
   await Promise.all([
-    await taskRepo.delete({ boardId: id }),
-    await boardRepo.delete(id),
+    taskRepo.delete({ boardId: id }),
+    boardRepo.delete(id),
   ]);
 };

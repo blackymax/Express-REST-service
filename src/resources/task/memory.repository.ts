@@ -33,8 +33,8 @@ export const updateTaskById = async (
 export const deleteTaskById = async (taskId: string): Promise<void> => {
   const taskRepo = getRepository(Task);
   await Promise.all([
-    await taskRepo.delete(taskId),
-    await taskRepo.find({where:{}})
+    taskRepo.delete(taskId),
+    taskRepo.find({where:{}})
   ])
 };
 
