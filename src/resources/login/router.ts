@@ -1,4 +1,3 @@
-// import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 import express, { Request, Response } from 'express';
 import asyncHandler from "express-async-handler";
 import jwt from 'jsonwebtoken';
@@ -13,7 +12,6 @@ loginRouter.route('/').post(asyncHandler(async (req: Request, res: Response) => 
     if (userFound) {
         const part = { userId: userFound.id, login: userFound.login };
         const token = jwt.sign(part, String(JWT_SECRET_KEY));
-        console.log('this '+ token)
         return res.status(200).json({token: token});
     }
     return res.status(401).json({message: "Not authorized"});

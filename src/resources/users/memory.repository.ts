@@ -20,7 +20,7 @@ export const addNew = async (obj: User): Promise<User> => {
 
 export const deleteByIndex = async (id: string): Promise<User[]> => {
   const userRepo = getRepository(User);
-  Promise.all([await userRepo.delete(id), await taskRepo.removeUsersId(id)]);
+  await Promise.all([await userRepo.delete(id), await taskRepo.removeUsersId(id)]);
   return userRepo.find();
 };
 

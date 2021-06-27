@@ -9,8 +9,7 @@ export const getAllByBoardId = async (id: string): Promise<Task[]> => {
 
 export const getById = async (taskId: string): Promise<Task|undefined> => {
   const taskRepo = getRepository(Task);
-  const find = await taskRepo.findOne({where: {id: taskId}});
-  return find;
+  return taskRepo.findOne({where: {id: taskId}});
 };
 
 export const createTaskById = async (
@@ -18,9 +17,8 @@ export const createTaskById = async (
   boardId: string
 ): Promise<Task> => {
   const taskRepo = getRepository(Task);
-  const newTask = await taskRepo.create({...obj, boardId});
-  const savedTask = await taskRepo.save(newTask)
-  return savedTask;
+  const newTask = taskRepo.create({...obj, boardId});
+  return taskRepo.save(newTask)
 };
 
 export const updateTaskById = async (
@@ -34,7 +32,7 @@ export const updateTaskById = async (
 
 export const deleteTaskById = async (taskId: string): Promise<void> => {
   const taskRepo = getRepository(Task);
-  Promise.all([
+  await Promise.all([
     await taskRepo.delete(taskId),
     await taskRepo.find({where:{}})
   ])
