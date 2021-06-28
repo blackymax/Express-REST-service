@@ -1,7 +1,8 @@
 import { getRepository } from 'typeorm'
+import { env } from '../common/config'
 import { User } from '../entity/user.model'
 
 export const createAdmin = async (): Promise<void> => {
-    const root: User = getRepository(User).create({ login: 'admin', password: 'admin' })
-    await getRepository(User).save(root)
+    const admin: User = getRepository(User).create({ login: env.ADMIN_LOGIN, password: env.ADMIN_PASSWORD })
+    await getRepository(User).save(admin)
 }

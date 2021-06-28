@@ -1,6 +1,11 @@
 import { getRepository } from "typeorm";
 import bcrypt from 'bcrypt';
 import { User } from "../../entity/user.model";
+import jwt from 'jsonwebtoken';
+import { Response } from "express";
+import { env } from '../../common/config';
+
+const JWT_SECRET_KEY = env.JWT_SECRET_KEY||'';
 
 async function checkUser(user: Partial<User>): Promise<User|false> {
     const { login, password } = user;
@@ -11,5 +16,14 @@ async function checkUser(user: Partial<User>): Promise<User|false> {
     }
     return false;
 }
+async function validate(user: Partial<User>, res: Response): Promise<Response> {
+    const userFound = await checkUser(user);
+    if (userFound) {
+        const part = { userId: userFound.id, login: userFound.login };
+        const token = jwt.sign(part, JWT_SECRET_KEY);
+        return res.status(200).json({token: token});
+    }
+    return res.status(401).json({message: "Not authorized"});
+}
 
-export { checkUser };
+export { checkUser, validate };
