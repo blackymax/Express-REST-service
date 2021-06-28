@@ -9,47 +9,42 @@ export const getAllByBoardId = async (id: string): Promise<Task[]> => {
 
 export const getById = async (taskId: string): Promise<Task|undefined> => {
   const taskRepo = getRepository(Task);
-  const find = await taskRepo.findOne({where: {id: taskId}});
-  return find;
+  return taskRepo.findOne({where: {id: taskId}});
 };
 
 export const createTaskById = async (
   obj: Task,
   boardId: string
 ): Promise<Task> => {
-  console.log('inside')
   const taskRepo = getRepository(Task);
-  const newTask = await taskRepo.create({...obj, boardId});
-  const savedTask = await taskRepo.save(newTask)
-  return savedTask;
+  const newTask = taskRepo.create({...obj, boardId});
+  return taskRepo.save(newTask)
 };
 
 export const updateTaskById = async (
   obj: Task,
   taskId: string
 ): Promise<Task|undefined> => {
-  console.log('inside')
   const taskRepo = getRepository(Task);
   await taskRepo.update(taskId, obj);
-  return await taskRepo.findOne(taskId);
+  return taskRepo.findOne(taskId);
 };
 
 export const deleteTaskById = async (taskId: string): Promise<void> => {
-  console.log('inside')
   const taskRepo = getRepository(Task);
-  await taskRepo.delete(taskId);
-  await taskRepo.find({where:{}})
+  await Promise.all([
+    taskRepo.delete(taskId),
+    taskRepo.find({where:{}})
+  ])
 };
 
 export const deleteTasks = async (id: string): Promise<Task[]> => {
-  console.log('inside')
   const taskRepo = getRepository(Task);
   await taskRepo.delete(id);
-  return await taskRepo.find({where:{}})
+  return taskRepo.find({where:{}})
 };
 
 export const removeUsersId = async (id: string): Promise<void> => {
-  console.log('inside')
   const taskRepo = getRepository(Task);
   await taskRepo.update({userId: id}, {userId: null});
 };

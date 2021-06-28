@@ -14,5 +14,5 @@ export const updateBoard = (
   obj: Board
 ): Promise<Board | undefined> => boardRepo.updateBoard(id, obj);
 
-export const deleteBoard = (id: string): Promise<boolean> =>
+export const deleteBoard = (id: string): Promise<void> =>
   boardRepo.deleteBoard(id);

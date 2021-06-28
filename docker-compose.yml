@@ -9,6 +9,7 @@ services:
             - postgres
         environment:
             - PORT=${PORT}
+            - POSTGRES_HOST=postgres
         restart: always
         volumes:
             - logs:/app/logs
@@ -22,7 +23,6 @@ services:
         restart: always
         container_name: docker-postgres
         environment:
-            - POSTGRES_HOST=${POSTGRES_HOST}
             - POSTGRES_PORT=${POSTGRES_PORT}
             - POSTGRES_DB=${POSTGRES_DB}
             - POSTGRES_USER=${POSTGRES_USER}
@@ -31,9 +31,10 @@ services:
         volumes:
             - pgdata:/var/lib/postgresql/data
             - ./src:/var/lib/posgresql/data
+        ports:
+            - '5432:5432'
         networks:
             - my-network
-
 networks:
     my-network:
         driver: bridge
