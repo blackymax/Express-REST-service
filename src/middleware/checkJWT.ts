@@ -15,7 +15,7 @@ function checkTokenIsCorrect(req: Request, res: Response, next: NextFunction): R
             if (type !== 'Bearer' || !token) {
                 return res.status(401).send({message: 'Wrong auth scheme'});
             }
-            jwt.verify(token, JWT_SECRET_KEY, {complete: true});
+            jwt.verify(token, JWT_SECRET_KEY);
             return next();
         }
         return res.status(401).send({message: "Not authorized"});
