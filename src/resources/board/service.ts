@@ -1,4 +1,4 @@
-import { Board } from '../../entity/board.model';
+import Board from '../../entity/board.model';
 import * as boardRepo from './memory.repository';
 
 export const getAll = (): Promise<Board[]|undefined> => boardRepo.getAll();

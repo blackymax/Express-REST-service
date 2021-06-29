@@ -1,6 +1,6 @@
 import { getRepository } from 'typeorm';
 import bcrypt from 'bcrypt';
-import { User } from '../../entity/user.model';
+import User from '../../entity/user.model';
 import jwt from 'jsonwebtoken';
 import { Response } from 'express';
 import { env } from '../../common/config';

@@ -12,7 +12,7 @@ export interface IUser {
 type IUserForReponse = Omit<IUser, 'password'>;
 
 @Entity()
-export class User implements IUser {
+class User implements IUser {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -47,3 +47,5 @@ export class User implements IUser {
     return { id, name, login };
   }
 }
+
+export default User

@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { Board } from '../../entity/board.model';
+import Board from '../../entity/board.model';
 import * as boardService from './service';
 export const router = express.Router();
 

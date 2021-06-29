@@ -1,8 +1,8 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import { Board } from './board.model';
+import Board from './board.model';
 
 @Entity({ name: 'column' })
-export class Columns {
+class Columns {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -18,3 +18,4 @@ export class Columns {
   @Column()
   boardId: string;
 }
+export default Columns

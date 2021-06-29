@@ -1,5 +1,5 @@
 import * as taskRepo from '../task/service';
-import { User } from '../../entity/user.model';
+import User from '../../entity/user.model';
 import { getRepository } from 'typeorm';
 
 export const getAll = async (): Promise<User[]> => {

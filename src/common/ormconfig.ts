@@ -16,12 +16,8 @@ const config = {
   database: env.POSTGRES_DB,
   synchronize: true,
   logging: false,
-  entities: ['src/entity/*.ts'],
-  migrations: ['src/migration/*.ts'],
-  cli:{
-    entitiesDir: 'src/entity',
-    migrationsDir: 'src/migration/'
-  }
+  entities: [ '../entity/*.*.ts'],
+  migrations: ['../migration/*.ts'],
 } as ConnectionOptions
 
 export default config;

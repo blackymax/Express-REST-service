@@ -1,7 +1,7 @@
 /**
  * @module TASK_SERVICE
  */
-import { Task } from '../../entity/task.model';
+import Task from '../../entity/task.model';
 import * as taskRepo from './memory.repository';
 
 export const getAllByBoardId = (id: string): Promise<Task[]> =>

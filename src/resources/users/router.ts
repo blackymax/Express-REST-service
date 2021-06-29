@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import express from 'express';
 import * as usersService from './service';
-import { User, IUser } from '../../entity/user.model'
+import User, { IUser } from '../../entity/user.model'
 export const router = express.Router();
 
 router.route('/').get(

@@ -1,6 +1,6 @@
 import { getRepository } from 'typeorm';
-import { Board } from '../../entity/board.model';
-import { Task } from '../../entity/task.model';
+import Board from '../../entity/board.model';
+import Task from '../../entity/task.model';
 
 export const getAll = async (): Promise<Board[]> => {
   const boardRepo = getRepository(Board);

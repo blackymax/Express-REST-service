@@ -1,4 +1,4 @@
-import { User } from '../../entity/user.model';
+import User from '../../entity/user.model';
 import * as usersRepo from './memory.repository';
 
 export const getAll = (): Promise<User[]> => usersRepo.getAll();

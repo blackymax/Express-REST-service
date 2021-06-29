@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import express from 'express';
 import * as taskService from './service';
 import { ITask } from '../../interfaces';
-import { Task } from '../../entity/task.model';
+import Task from '../../entity/task.model';
 export const router = express.Router({ mergeParams: true });
 
 router.route('/').get(
