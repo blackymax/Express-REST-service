@@ -11,7 +11,7 @@ export class BoardController {
   @Get()
   async getAll(@Req() _req: Request, @Res() res: Response): Promise<void> {
     const boards: Board[] | undefined = await this.boardService.getAll();
-    res.status(200).json(boards);
+    res.status(200).send(boards);
   }
 
   @Get('/:boardId')
@@ -19,16 +19,16 @@ export class BoardController {
     const { boardId } = req.params;
     const find = await this.boardService.getById(boardId);
     if (find) {
-      res.status(200).json(find);
+      res.status(200).send(find);
     } else {
-      res.status(404).json({ message: 'board not found' });
+      res.status(404).send({ message: 'board not found' });
     }
   }
 
   @Post('/')
   async create(@Req() req: Request, @Res() res: Response): Promise<void> {
     const newBoard = await this.boardService.createBoard(req.body);
-    res.status(201).json(newBoard);
+    res.status(201).send(newBoard);
   }
 
   @Put('/:boardId')
@@ -38,13 +38,13 @@ export class BoardController {
       boardId as string,
       req.body
     );
-    res.status(200).json(newBoard as Board);
+    res.status(200).send(newBoard as Board);
   }
 
   @Delete('/:boardId')
   async delete(@Req() req: Request, @Res() res: Response): Promise<void> {
     const { boardId } = req.params;
     const result = await this.boardService.deleteBoard(boardId as string);
-    res.status(200).json(result);
+    res.status(200).send(result);
   }
 }

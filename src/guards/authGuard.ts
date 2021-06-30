@@ -17,17 +17,21 @@ export class AuthGuard implements CanActivate {
       if (head) {
         const [type, token] = head.split(' ');
         if (!token) {
-          return res.status(401).send({ message: 'Wrong token' });
+          res.status(401).send({ message: 'Wrong token' });
+          return false
         } else if (type !== 'Bearer') {
-          return res.status(401).send({ message: 'Wrong auth scheme' });
+          res.status(401).send({ message: 'Wrong auth scheme' });
+          return false
         } else {
           jwt.verify(token, JWT_SECRET_KEY);
           return true;
         }
       }
-      return res.status(401).send({ message: 'Not authorized' });
+      res.status(401).send({ message: 'Not authorized' });
+      return false
     } catch (err) {
-      return res.status(403).send({ message: 'Wrong token' });
+      res.status(403).send({ message: 'Wrong token' });
+      return false
     }
   }
 }

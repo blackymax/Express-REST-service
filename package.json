@@ -19,7 +19,8 @@
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js --config src/common/ormconfig.ts",
     "db:generate": "npm run typeorm migration:generate -- -n",
     "db:migrate": "npm run typeorm migration:run",
-    "db:create": "npm run typeorm migration:create -- -n"
+    "db:create": "npm run typeorm migration:create -- -n",
+    "art": "artillery run artillery.yml"  
   },
   "keywords": [
     "rs",
@@ -51,7 +52,9 @@
     ]
   },
   "dependencies": {
+    "@nestjs/platform-fastify": "^7.6.18",
     "@nestjs/swagger": "^4.8.1",
+    "artillery-plugin-expect": "^1.4.0",
     "cross-env": "7.0.3",
     "dotenv": "9.0.0",
     "express": "4.17.1",
@@ -95,6 +98,7 @@
     "eslint-plugin-prettier": "3.4.0",
     "eslint-plugin-promise": "^5.1.0",
     "express-async-handler": "^1.1.4",
+    "fastify-cors": "^6.0.1",
     "fs": "0.0.1-security",
     "husky": "4.3.8",
     "jest": "26.6.3",

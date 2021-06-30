@@ -18,11 +18,11 @@ export class LoginController {
       if (userFound) {
         const part = { userId: userFound.id, login: userFound.login };
         const token = jwt.sign(part, JWT_SECRET_KEY);
-        return res.status(200).json({ token: token });
+        return res.status(200).send({ token: token });
       }
-      return res.status(403).json({ message: 'Forbidden' });
+      return res.status(403).send({ message: 'Forbidden' });
     } catch (err) {
-      return res.status(401).json({ message: `Not Authorized, ${err}` });
+      return res.status(401).send({ message: `Not Authorized, ${err}` });
     }
   }
 }

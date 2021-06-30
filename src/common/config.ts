@@ -17,5 +17,6 @@ export const env = {
   POSTGRES_HOST: process.env['POSTGRES_HOST'],
   POSTGRES_PORT: process.env['POSTGRES_PORT'],
   ADMIN_LOGIN: process.env['ADMIN_LOGIN'],
-  ADMIN_PASSWORD: process.env['ADMIN_PASSWORD']
+  ADMIN_PASSWORD: process.env['ADMIN_PASSWORD'],
+  USE_FASTIFY: process.env['USE_FASTIFY']
 };

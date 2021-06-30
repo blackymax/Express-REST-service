@@ -15,7 +15,7 @@ export class TaskController {
   async getAll(@Req() req: Request, @Res() res: Response): Promise<void> {
     const { boardId } = req.params;
     const tasks = await this.taskService.getAllByBoardId(boardId as string);
-    res.status(200).json(tasks);
+    res.status(200).send(tasks);
   }
 
   @Get('/:taskId')
@@ -23,9 +23,9 @@ export class TaskController {
     const { taskId } = req.params;
     const find = await this.taskService.getById(taskId as string);
     if (find) {
-      res.status(200).json(find);
+      res.status(200).send(find);
     } else {
-      res.status(404).json({ message: 'cannot find task' });
+      res.status(404).send({ message: 'cannot find task' });
     }
   }
 
@@ -34,7 +34,7 @@ export class TaskController {
     const { boardId } = req.params;
     if (boardId) {
       const newTask = await this.taskService.createTaskById(req.body, boardId);
-      res.status(201).json(newTask);
+      res.status(201).send(newTask);
     }
   }
 
@@ -45,13 +45,13 @@ export class TaskController {
       req.body as Task,
       taskId as string
     );
-    res.status(200).json(result as ITask);
+    res.status(200).send(result as ITask);
   }
 
   @Delete('/:taskId')
   async deleteById(@Req() req: Request, @Res()  res: Response): Promise<void> {
     const { taskId } = req.params;
     const result = await this.taskService.deleteTaskById(taskId as string);
-    res.status(200).json(result);
+    res.status(200).send(result);
   }
 }
