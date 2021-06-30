@@ -11,6 +11,10 @@ For change platform write next to USE_FASTIFY .env file:
     -express: USE_FASTIFY=false (or smth other to true)
 Restart server when change USE_FASTIFY string at .env
 Root folder have artillery.yml config-file for sure that these test are correct
+Script for run test:
+```
+npm run art
+```
 
 ## Fastify                                  |  Express
 ```
