@@ -1,8 +1,10 @@
 import { Module } from '@nestjs/common';
-// import { ConfigModule } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm';
 import config from './common/ormconfig';
+import { errorLogger } from './middleware/errorLogging/errorLogging.middleware';
+import { AppLogger } from './middleware/loggingHandler/loggingHandler.module';
 import { BoardModule } from './resources/board/board.module';
+import { LoginModule } from './resources/login/login.module';
 import { TaskModule } from './resources/task/task.module';
 import { UserModule } from './resources/users/user.module';
 
@@ -10,15 +12,11 @@ import { UserModule } from './resources/users/user.module';
   imports: [TypeOrmModule.forRoot(config),
     BoardModule,
     TaskModule,
-    UserModule
+    UserModule,
+    errorLogger,
+    LoginModule,
+    AppLogger,
 ],
   
 })
-export class AppModule {
-  // configure(consumer: MiddlewareConsumer) {
-  //   consumer.apply(AuthMiddleware).forRoutes({
-  //     path: '*',
-  //     method: RequestMethod.ALL,
-  //   });
-  // }
-}
+export class AppModule {}

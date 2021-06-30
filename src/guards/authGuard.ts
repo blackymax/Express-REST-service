@@ -1,18 +1,17 @@
-import { Request, Response, NextFunction } from 'express';
+import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
+import { Observable } from 'rxjs';
 import jwt from 'jsonwebtoken';
 import { env } from '../common/config';
 
-const urls = ['/doc', '/', '/login'];
 const JWT_SECRET_KEY = env.JWT_SECRET_KEY || '';
 
-function checkTokenIsCorrect(
-  req: Request,
-  res: Response,
-  next: NextFunction
-): Response | void {
-  if (urls.includes(req.url)) {
-    return next();
-  } else {
+@Injectable()
+export class AuthGuard implements CanActivate {
+  canActivate(
+    context: ExecutionContext
+  ): boolean | Promise<boolean> | Observable<boolean> {
+    const req = context.switchToHttp().getRequest();
+    const res = context.switchToHttp().getResponse();
     try {
       const head = req.headers.authorization;
       if (head) {
@@ -23,14 +22,12 @@ function checkTokenIsCorrect(
           return res.status(401).send({ message: 'Wrong auth scheme' });
         } else {
           jwt.verify(token, JWT_SECRET_KEY);
-          return next();
+          return true;
         }
       }
       return res.status(401).send({ message: 'Not authorized' });
     } catch (err) {
-      return res.status(401).send({ message: 'Wrong token' });
+      return res.status(403).send({ message: 'Wrong token' });
     }
   }
 }
-
-export { checkTokenIsCorrect };

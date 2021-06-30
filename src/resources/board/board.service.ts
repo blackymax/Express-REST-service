@@ -2,14 +2,15 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import Board from '../../entity/board.model';
-import { TaskService } from '../task/task.service';
+import Task from '../../entity/task.model';
 
 @Injectable()
 export class BoardService {
   constructor(
     @InjectRepository(Board)
     private readonly boardRepo: Repository<Board>,
-    private readonly taskRepo: TaskService,
+    @InjectRepository(Task)
+    private readonly taskRepo: Repository<Task>,
   ){}
   async getAll(): Promise<Board[]> {
     return this.boardRepo.find();
@@ -30,6 +31,6 @@ export class BoardService {
     return newBoard.raw;
   }
   async deleteBoard(id: string): Promise<void> {
-    await Promise.all([this.taskRepo.deleteTasks(id), this.boardRepo.delete(id)]);
+    await Promise.all([this.taskRepo.delete({ boardId: id }), this.boardRepo.delete(id)]);
   }
 }
