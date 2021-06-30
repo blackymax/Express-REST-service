@@ -5,5 +5,15 @@ config:
           arrivalRate: 1
 scenarios:
     - flow:
+        - post:
+            url: '/login'
+            json: 
+                login: "admin"
+                password: "admin"
+            capture:
+                json: '$.token'
+                as: 'token'
         - get:
+            headers:
+                authorization: 'Bearer {{token}}'
             url: '/users'
