@@ -6,7 +6,7 @@
 - Node.js - [Download & Install Node.js](https://nodejs.org/en/download/) and the npm package manager.
 ## Fastify VS Express platforms table
 
-For change platform write next to USE_FASTIFY .env file:
+For change platform write value to USE_FASTIFY at .env file:
     -fastify: USE_FASTIFY=true
     -express: USE_FASTIFY=false (or smth other to true)
 Restart server when change USE_FASTIFY string at .env
