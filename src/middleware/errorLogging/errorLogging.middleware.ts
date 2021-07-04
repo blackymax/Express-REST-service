@@ -8,12 +8,17 @@ const newLineChar = process.platform === 'win32' ? '\r\n' : '\n';
 export class errorLogger implements ExceptionFilter{
   public catch(err: Error, host: ArgumentsHost):Response | void {
     const ctx = host.switchToHttp();
-    const res = ctx.getResponse();
+    // const res = ctx.getResponse();
     const next = ctx.getNext();
+    try {
     const errorLogInfo = `${new Date().toUTCString()}; status: ${HttpStatus.INTERNAL_SERVER_ERROR};error: ${err.message}; error-type: Internal Server Error ${newLineChar}`
     fs.appendFileSync(__dirname + '/../../../logs/error_log.txt', errorLogInfo);
     process.stdout.write(errorLogInfo)
-    res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(`${err}: Internal Server Error`);
     next();
+    } catch (error) {
+      const errorLogInfo = `${new Date().toUTCString()}; status: ${HttpStatus.INTERNAL_SERVER_ERROR};error: ${err.message}; error-type: Internal Server Error ${newLineChar}`
+      fs.appendFileSync(__dirname + '/../../../logs/error_log.txt', errorLogInfo);
+      process.stdout.write(errorLogInfo)
+    }
   }
 }
