@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn,Column } from 'typeorm';
 
 @Entity({name: 'task'})
-export class Task {
+class Task {
   @PrimaryGeneratedColumn('uuid')
   id: string;
   @Column({length: 200})
@@ -17,3 +17,4 @@ export class Task {
   @Column({nullable: true})
   columnId: string;
 }
+export default Task

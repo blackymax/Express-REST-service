@@ -4,7 +4,68 @@
 
 - Git - [Download & Install Git](https://git-scm.com/downloads).
 - Node.js - [Download & Install Node.js](https://nodejs.org/en/download/) and the npm package manager.
+## Fastify VS Express platforms table
 
+For change platform write value to ```USE_FASTIFY``` at ```.env``` file:
+    -fastify: ```USE_FASTIFY=true```
+    -express: ```USE_FASTIFY=false``` (or smth other to true)
+Restart server when change ```USE_FASTIFY``` string at ```.env```
+Root folder have ```artillery.yml``` config-file for sure that these test are correct
+
+## Script for run test:
+```
+npm run art
+```
+
+## Fastify                                  |  Express
+```
+Report @ 22:19:58(+0300) 2021-06-30         |  Report @ 22:12:22(+0300) 2021-06-30
+Elapsed time: 10 seconds                    |  Elapsed time: 10 seconds
+  Scenarios launched:  9                    |  Scenarios launched:  9
+  Scenarios completed: 9                    |  Scenarios completed:  9
+  Requests completed:  18                   |  Requests completed:  18
+  Mean response/sec: 2                      |  Mean response/sec: 2
+  Response time (msec):                     |  Response time (msec):
+    min: 1                                  |    min: 4
+    max: 132                                |    max: 106
+    median: 31.5                            |    median: 33
+    p95: 104                                |    p95: 93.2
+    p99: 132                                |    p99: 106
+  Codes:                                    |  Codes:
+    200: 18                                 |    200: 18
+
+Report @ 22:19:59(+0300) 2021-06-30         | Report @ 22:12:22(+0300) 2021-06-30
+Elapsed time: 10 seconds                    | Elapsed time: 10 seconds
+  Scenarios launched:  1                    | Scenarios launched:  1
+  Scenarios completed: 1                    | Scenarios completed: 1
+  Requests completed:  2                    | Requests completed:  2
+  Mean response/sec: 3.92                   | Mean response/sec: 4.08
+  Response time (msec):                     | Response time (msec):
+    min: 2                                  |   min: 4
+    max: 59                                 |   max: 60
+    median: 30.5                            |   median: 32
+    p95: 59                                 |   p95: 60
+    p99: 59                                 |   p99: 60
+  Codes:                                    | Codes:
+    200: 2                                  |   200: 2
+
+All virtual users finished                  | All virtual users finished
+Summary report @ 22:19:59(+0300) 2021-06-30 | Summary report @ 22:12:22(+0300) 2021-06-30
+  Scenarios launched:  10                   | Scenarios launched:  10
+  Scenarios completed: 10                   | Scenarios completed: 10
+  Requests completed:  20                   | Requests completed:  20
+  Mean response/sec: 2.1                    | Mean response/sec: 1.05
+  Response time (msec):                     | Response time (msec):
+    min: 1                                  |   min: 4
+    max: 132                                |   max: 106
+    median: 31.5                            |   median: 33
+    p95: 97                                 |   p95: 90
+    p99: 132                                |   p99: 106
+  Scenario counts:                          | Scenario counts:
+    0: 10 (100%)                            |   0: 10 (100%)
+  Codes:                                    | Codes:
+    200: 20                                 |   200: 20
+```
 ## Downloading
 
 ```
